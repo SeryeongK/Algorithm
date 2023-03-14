@@ -12,6 +12,7 @@ def pop():
     global queue
     if len(queue) > 0:
         print(queue[0])
+        ## 🚨 deque를 사용하지 않을 경우 시간초과
         queue.popleft()
     else:
         print(-1)
