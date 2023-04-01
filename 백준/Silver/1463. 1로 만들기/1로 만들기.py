@@ -12,19 +12,12 @@ for i in range(2, N+1):
     ## 숫자가 2나 3일 때(초기값)
     if i == 2 or i == 3:
         DP[i] = 1
-    else:    
-        three = 0
-        two = 0
-        if i % 3 == 0:
-            three = i//3
-        if i % 2 == 0:
-            two = i//2
-        
-        if three and two:
+    else:   
+        if i%3 == 0 and i%2 == 0:
             DP[i] = min(DP[i//3], DP[i//2], DP[i-1]) + 1
-        elif three:
+        elif i%3 == 0:
             DP[i] = min(DP[i//3], DP[i-1]) + 1
-        elif two:
+        elif i%2 == 0:
             DP[i] = min(DP[i//2], DP[i-1]) + 1
         else:
             DP[i] = DP[i-1] + 1
