@@ -8,7 +8,6 @@ N = int(sys.stdin.readline())
 meetings = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
 meetings = sorted(meetings, key=lambda x: (x[1], x[0]))
 
-
 # 첫번째 회의: 가장 빨리 끝나는 회의
 table = []
 table.append(meetings[0])
