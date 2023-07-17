@@ -1,23 +1,7 @@
 const fs = require("fs");
-const readline = require("readline");
+const inputData = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
 
-const rl = readline.createInterface({
-  input: fs.createReadStream('/dev/stdin'),
-  output: process.stdout,
-  terminal: false,
-});
-
-let lineCount = 0;
-
-rl.on("line", function (line) {
-  if (lineCount === 0) {
-    lineCount = Number(line);
-  } else {
-    const numbers = line.trim().split(" ").map(Number);
-    console.log(numbers[0] + numbers[1]);
-    lineCount--;
-    if (lineCount === 0) {
-      rl.close();
-    }
-  }
-});
+for (let i = 1; i <= Number(inputData[0]); i++) {
+  const [A, B] = inputData[i].trim().split(" ").map(Number);
+  console.log(A + B);
+}
