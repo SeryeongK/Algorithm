@@ -1,5 +1,5 @@
 def solve(a):
-    s = 0
-    for i in range(len(a)):
-        s += int(a[i])
-    return s
+    ans = 0
+    for i in a:
+        ans += int(i)
+    return ans
