@@ -1,19 +1,11 @@
-import sys
+T = int(input())
+input = [list(map(int, input().split())) for _ in range(T)]
 
-n = int(sys.stdin.readline())
-data = [sys.stdin.readline().strip() for i in range(n)]
-
-for i in range(n):
-    line = data[i].split()
-    add = 0
-    # 평균 구하기
-    for i in range(1, int(line[0])+1):
-        add += int(line[i])
-    average = add / int(line[0])
-    # 평균이랑 비교하기
-    st = 0
-    for i in range(1, int(line[0])+1):
-        if int(line[i]) > average:
-            st += 1
-    p = st / int(line[0]) * 100
-    print(f"{p:.3f}"+"%")
+for i in input:
+    len = i[0]
+    avg = (sum(i) - len) / len
+    overAvg = 0
+    for num in range(1, len + 1):
+        if i[num] > avg:
+            overAvg += 1
+    print(format(round(overAvg / len * 100, 3), '.3f') + '%')  # format: 소수점 표시
