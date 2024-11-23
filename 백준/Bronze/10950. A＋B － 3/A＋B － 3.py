@@ -1,9 +1,6 @@
-import sys
+T = int(input())
+input = [input() for _ in range(T)]
 
-n = int(sys.stdin.readline())
-
-data = [sys.stdin.readline().strip() for i in range(n)]
-
-for line in data:
-    nums = line.split()
-    print(int(nums[0]) + int(nums[1]))
+for i in input:
+    a, b = map(int, i.split())
+    print(a + b)
