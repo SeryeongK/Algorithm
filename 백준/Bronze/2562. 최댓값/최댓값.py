@@ -1,13 +1,12 @@
-import sys
+input = [int(input()) for _ in range(9)]
 
-data = []
+max = 0
+maxIdx = 0
 
 for i in range(9):
-    data.append(int(sys.stdin.readline().strip()))
+    if input[i] > max:
+        max = input[i]
+        maxIdx = i
 
-new = data.copy()
-new.sort()
-l = new[-1]
-
-print(l)
-print(data.index(l)+1)
+print(max)
+print(maxIdx + 1)
