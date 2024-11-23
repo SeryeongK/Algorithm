@@ -1,24 +1,14 @@
-import sys
+T = int(input())
+input = [input() for _ in range(T)]
 
-n = int(sys.stdin.readline())
-data = [sys.stdin.readline().strip() for i in range(n)]
-score = 0 
-count = 0
-output = []
-
-for i in range(n):
-    line = data[i]
-    for i in range(len(line)):
-        if line[i] == "O":
-            count += 1
-            score += count
-        else:
-            count = 0
-            score += count
-
-    output.append(score)
-    count = 0
+for result in input:
+    result = list(result)
     score = 0
-
-for i in range(n):
-    print(output[i])
+    continuedScore = 0
+    for i in result:
+        if i == 'O':
+            continuedScore += 1
+            score += continuedScore
+        else:
+            continuedScore = 0
+    print(score)
