@@ -1,10 +1,7 @@
-# 팩토리얼
-import sys
+input = int(input())
 
-n = int(sys.stdin.readline())
-output = 1
+result = 1
+for i in range(1, input+1):
+    result = result * i
 
-for i in range(2, n+1):
-    output = output*i
-
-print(output)
+print(result)
