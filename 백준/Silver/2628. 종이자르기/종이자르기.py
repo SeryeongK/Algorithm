@@ -1,38 +1,31 @@
-# 종이 자르기
-import sys
+a, b = map(int, input().split())
+x = [0, a]
+y = [0, b]
+n = int(input())
+input = [input() for _ in range(n)]
 
-paper = sys.stdin.readline().split()
-num = int(sys.stdin.readline())
-input =[sys.stdin.readline().strip() for _ in range(num)]
-
-w =[0]
-w.append(int(paper[1]))
-h = [0]
-h.append(int(paper[0]))
-
-ww =[]
-hh =[]
-
-## 가로, 세로 넣고 정렬
+# 가로 세로 선 추가
 for i in input:
-    l = i.split()
-    if l[0] == '0':
-        w.append(int(l[1]))
+    a, b = map(int, i.split())
+    if a == 0:
+        y.append(b)
     else:
-        h.append(int(l[1]))
+        x.append(b)
 
-w.sort()
-h.sort()
+x.sort()
+y.sort()
 
-## 길이 넣기
-for i in range(1, len(w)):
-    ww.append(w[i] - w[i-1])
+# 가장 차이가 많이 나는 가로 세로 길이
+maxX = 0
+maxY = 0
+for i in range(1, len(x)):
+    gapX = x[i]-x[i-1]
+    if gapX > maxX:
+        maxX = gapX
 
+for i in range(1, len(y)):
+    gapY = y[i]-y[i-1]
+    if gapY > maxY:
+        maxY = gapY
 
-for i in range(1, len(h)):
-    hh.append(h[i] - h[i-1])
-
-
-wm = max(ww)
-hm = max(hh)
-print(wm*hm)
+print(maxX * maxY)
