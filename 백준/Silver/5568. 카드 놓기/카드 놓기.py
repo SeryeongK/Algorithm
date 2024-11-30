@@ -1,15 +1,11 @@
-# 카드 놓기
-import sys
 import itertools
 
-n = int(sys.stdin.readline())
-r = int(sys.stdin.readline())
-nums =[sys.stdin.readline().strip() for _ in range(n)]
+n = int(input())
+k = int(input())
+cards = [input() for _ in range(n)]
 
-output = set()
+result = set()
+for i in list(itertools.permutations(cards, k)):
+    result.add(''.join(i))
 
-## 🚨 순열을 계산해주는 함수
-for i in list(itertools.permutations(nums, r)):
-    output.add("".join(i))
-
-print(len(output))
+print(len(result))
