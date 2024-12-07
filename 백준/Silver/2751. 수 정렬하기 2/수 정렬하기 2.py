@@ -1,9 +1,7 @@
-# 수 정렬하기2
 import sys
 
-n = int(sys.stdin.readline())
-input = [int(sys.stdin.readline().strip()) for _ in range(n)]
+n = int(input())
+input = [int(sys.stdin.readline()) for _ in range(n)]
 
-input.sort()
-for i in input:
+for i in sorted(input):
     print(i)
