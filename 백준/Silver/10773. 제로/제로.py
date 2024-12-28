@@ -1,22 +1,14 @@
-# 제로
-import sys
+K = int(input())
 
-stk = []
-
-def push(x):
-    global stk
-    stk.append(x)
-
-def pop():
-    global stk
-    stk = stk[:-1]
-
-k = int(sys.stdin.readline())
-for _ in range(k):
-    input = int(sys.stdin.readline())
-    if input == 0:
-        pop()
+book = []
+sum = 0
+for _ in range(K):
+    num = int(input())
+    if num == 0:
+        poppedNum = book.pop()
+        sum -= poppedNum
     else:
-        push(input)
+        book.append(num)
+        sum += num
 
-print(sum(stk))
+print(sum)
