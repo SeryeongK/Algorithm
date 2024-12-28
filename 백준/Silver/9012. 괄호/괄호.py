@@ -1,32 +1,20 @@
-# 괄호
-import sys
+T = int(input())
 
-def push():
-    global arr
-    arr.append(0)
-
-def pop():
-    global arr
-    arr = arr[:-1]
-
-n = int(sys.stdin.readline().strip())
-for _ in range(n):
-    input = sys.stdin.readline().strip()
-    arr = []
-    result = 1
-    for i in range(len(input)):
-        if input[i] == "(":
-            push()
+for _ in range(T):
+    line = list(input())
+    stack = []
+    for i in line:
+        if i == '(':
+            stack.append('(')
         else:
-            if len(arr) <= 0:
-                print("NO")
-                result = 0
-                break
+            if len(stack) > 0:
+                if stack[len(stack) - 1] == ')':
+                    stack.append(')')
+                else:
+                    stack.pop()
             else:
-                pop()
-    if result == 0:
-        continue        
-    elif len(arr) > 0:
-        print("NO")
+                stack.append(')')
+    if len(stack) > 0:
+        print('NO')
     else:
-        print("YES")
+        print('YES')
