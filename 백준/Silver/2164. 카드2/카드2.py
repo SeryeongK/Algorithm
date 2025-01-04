@@ -1,16 +1,15 @@
-# 카드2 - 큐
 import sys
-import collections
+from collections import deque
 
-n = int(sys.stdin.readline())
-input = collections.deque([])
-for i in range(1, n+1):
-    input.append(i)
+N = int(sys.stdin.readline())
 
-while len(input) > 1:
-    input.popleft()
-    top = input[0]
-    input.popleft()
-    input.append(top)
+queue = deque([])
+for i in range(1, N+1):
+    queue.append(i)
 
-print(input[0])
+while len(queue) > 1:
+    queue.popleft()  # 제일 위 카드 버리기
+    popped = queue.popleft()
+    queue.append(popped)  # 제일 위 카드를 제일 아래로 옮기기
+
+print(queue[0])
