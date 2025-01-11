@@ -1,12 +1,10 @@
-# 일곱 난쟁이
 import sys
 from itertools import combinations
-input = list(map(int, [sys.stdin.readline().strip() for _ in range(9)]))
-ls = list(combinations(input, 7))
-nls = []
-for i in ls:
-    if sum(i) == 100:
-        nls.append(sorted(list(i)))
 
-for j in nls[0]:
-    print(j)
+height = [int(sys.stdin.readline()) for _ in range(9)]
+combi = list(combinations(height, 7))  # 7명의 키 조합
+for i in combi:
+    if sum(i) == 100:  # 키의 합이 100이면
+        for num in sorted(i):
+            print(num)
+        break
