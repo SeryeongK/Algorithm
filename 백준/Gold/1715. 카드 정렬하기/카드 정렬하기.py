@@ -1,25 +1,22 @@
-# 카드 정렬하기 - 힙
 import sys
 import heapq
-
-## 힙에 추가
 N = int(sys.stdin.readline())
-heap = []
-for _ in range(N):
-    input = int(sys.stdin.readline())
-    heapq.heappush(heap, input)
 
-## 비교한 횟수
-sum = 0
-## 마지막에는 최종적으로 다 합해진 카드 묶음만 남기 때문에
-while len(heap) > 1:
-    s = 0
-    ## 🚨 가장 작은 것 2번 더하기
-    s += heapq.heappop(heap)
-    s += heapq.heappop(heap)
-    ## 비교한 횟수에 더하기
-    sum += s
-    ## 더해진 카드 묶음 힙에 추가
-    heapq.heappush(heap, s)
+if N == 1:  # 카드가 한 장일 경우 비교할 필요 없음
+    print(0)
+else:
+    cards = []
+    # 카드 추가
+    for _ in range(N):
+        card = int(sys.stdin.readline())
+        cards.append(card)
 
-print(sum)
+    heapq.heapify(cards)  # 정렬
+
+    result = 0
+    while len(cards) >= 2:
+        bundle = heapq.heappop(cards) + heapq.heappop(cards)  # 비교 횟수 추가
+        result += bundle
+        heapq.heappush(cards, bundle)
+
+    print(result)
