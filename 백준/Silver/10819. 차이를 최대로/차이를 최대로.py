@@ -1,22 +1,17 @@
-# 차이를 최대로
 import sys
-from itertools import permutations
+import itertools
 
-n = int(sys.stdin.readline())
-input = list(map(int, sys.stdin.readline().split()))
+N = int(sys.stdin.readline())
+nums = list(itertools.permutations(
+    (list(map(int, sys.stdin.readline().split())))))
 
-## 모든 순서의 배열 구하기
-ls = list(permutations(input, len(input)))
-for i in range(len(ls)):
-    ls[i] = list(ls[i])
+max = 0
+for per in nums:
+    sum = 0
+    for i in range(0, len(per)-1):
+        sum += abs(per[i] - per[i+1])
 
-## 최댓값 구하기
-sls = []
-for i in ls:
-    s = 0
-    for j in range(1, len(i)):
-        s += (abs(i[j-1]-i[j]))
-    sls.append(s)
+    if sum > max:
+        max = sum
 
-sls.sort()
-print(sls[-1])
+print(max)
