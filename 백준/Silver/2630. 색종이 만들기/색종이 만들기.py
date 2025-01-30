@@ -8,9 +8,9 @@ blue, white = [0, 0]
 def check_color(x, y, size):
     flag = False
     current_color = colors[y][x]
-    for i in range(y, y+size):
-        for j in range(x, x+size):
-            if current_color != colors[i][j]:  # 색이 하나라도 다르면
+    for plus_y in range(size):
+        for plus_x in range(size):
+            if current_color != colors[y + plus_y][x + plus_x]:  # 색이 하나라도 다르면
                 flag = True
                 break
         if flag:
