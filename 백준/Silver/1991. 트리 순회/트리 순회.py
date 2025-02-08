@@ -1,61 +1,60 @@
-# 트리 순회 - 이진 트리
 import sys
 
-level = int(sys.stdin.readline())
-tree = []
-for _ in range(level):
-    tree.append(sys.stdin.readline().split())
+N = int(sys.stdin.readline())
+trees = [sys.stdin.readline().split() for _ in range(N)]
 
-## 전위 순회: (루트)(왼쪽 자식)(오른쪽 자식)
-pre = ''
-def preorder(t):
-    global pre
-    pre += t[0]
-    if t[1]:
-        for i in tree:
-            if i[0] == t[1]:
-                preorder(i)
+preResult = ''
+# 전위 순회 루트/왼쪽/오른쪽
+def preOrder(tree):  # 첫 줄만 받음
+    global preResult
+    preResult += tree[0]
+    if tree[1]:
+        for i in trees:
+            if tree[1] == i[0]:
+                preOrder(i)
                 break
-    if t[2]:
-        for i in tree:
-            if i[0] == t[2]:
-                preorder(i)
+    if tree[2]:
+        for i in trees:
+            if tree[2] == i[0]:
+                preOrder(i)
                 break
-preorder(tree[0])
-print(pre)
 
-## 중위 순회: (왼쪽 자식) (루트) (오른쪽 자식)
-ino = ''
-def inorder(t):
-    global ino
-    if t[1]:
-        for i in tree:
-            if i[0] == t[1]:
-                inorder(i)
-                break
-    ino += t[0]
-    if t[2]:
-        for i in tree:
-            if i[0] == t[2]:
-                inorder(i)
-                break
-inorder(tree[0])
-print(ino)
+preOrder(trees[0])
+print(preResult)
 
-## 후위 순회: (왼쪽 자식) (오른쪽 자식) (루트)
-post = ''
-def postorder(t):
-    global post
-    if t[1]:
-        for i in tree:
-            if i[0] == t[1]:
-                postorder(i)
+inResult = ''
+# 중위 순회 왼쪽/루트/오른쪽
+def inOrder(tree):
+    global inResult
+    if tree[1]:
+        for i in trees:
+            if tree[1] == i[0]:
+                inOrder(i)
                 break
-    if t[2]:
-        for i in tree:
-            if i[0] == t[2]:
-                postorder(i)
+    inResult += tree[0]
+    if tree[2]:
+        for i in trees:
+            if tree[2] == i[0]:
+                inOrder(i)
                 break
-    post += t[0]
-postorder(tree[0])
-print(post)
+inOrder(trees[0])
+print(inResult)
+
+postResult = ''
+# 후위 순회 왼쪽/오른쪽/루트
+def postOrder(tree):
+    global postResult
+    if tree[1]:
+        for i in trees:
+            if tree[1] == i[0]:
+                postOrder(i)
+                break
+    if tree[2]:
+        for i in trees:
+            if tree[2] == i[0]:
+                postOrder(i)
+                break
+    postResult += tree[0]
+
+postOrder(trees[0])
+print(postResult)
