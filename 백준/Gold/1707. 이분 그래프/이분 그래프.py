@@ -1,53 +1,45 @@
-# 이분 그래프 - DFS
-## 이분 그래프란 인접한 정점끼리 서로 다른 색으로 칠해서 모든 정점을 두 가지 색으로만 칠할 수 있는 그래프
-
-## 블로그 코드 참고(https://wooono.tistory.com/635)
-
 import sys
 sys.setrecursionlimit(10**6)
-
-def DFS(start):
-    global result
-    for i in ls[start]:
-        ## 이웃 노드에 색칠되어있지 않다면
-        if visited[i] == -1:
-            ## 기준 노드와 다른 색으로 색칠하기
-            if visited[start] == 1:
-                visited[i] = 2
-            if visited[start] == 2:
-                visited[i] = 1
-            DFS(i)
-        # 이웃 노드에 색칠이 되어 있다면
-        else:
-            if visited[start] == visited[i]:
-                result = False
-                return 
-
 K = int(sys.stdin.readline())
+
+
+def bfs(V):
+    flag = 'YES'
+    while q:
+        cur = q.pop(0)
+        graph[cur].sort()
+        for i in graph[cur]:
+            if not visited[i]:
+                q.append(i)
+                if visited[cur] == 1:
+                    visited[i] = 2  # 인접한 노드와 다르게 색칠
+                else:
+                    visited[i] = 1
+            else:  # 이미 가본 적 있음
+                if visited[cur] == visited[i]:
+                    flag = 'NO'
+                    break
+    return (flag)
+
+
 for _ in range(K):
     V, E = map(int, sys.stdin.readline().split())
-    input = []
+    graph = [[] for _ in range(V + 1)]
+    visited = [False] * (V + 1)
     for _ in range(E):
-        input.append(list(map(int, sys.stdin.readline().split())))
-    ## 인접 리스트 만들기
-    ls = [[] for _ in range(V+1)]
-    for i in input:
-        a, b = i
-        ls[a].append(b)
-        ls[b].append(a)
-    ## DFS
-    result = True
-    visited = [-1] * (V+1)
-    
-    for i in range(1, V+1):
-        if visited[i] == -1:
-            visited[i] = 1
-            DFS(i)
-            ## 🚨 종료 조건 설정하기
-            if result == False:
-                break
-    
-    if result == True:
-        print("YES")
+        u, v = map(int, sys.stdin.readline().split())
+        graph[u].append(v)
+        graph[v].append(u)
+    if V == 1:
+        print('YES')
     else:
-        print("NO")
+        visited[0] = 1
+        flag = 'YES'
+        while 0 in visited and flag == 'YES':
+            for i in range(V+1):  # 여러 그래프가 떨어져있을 경우
+                if not visited[i]:
+                    q = [i]
+                    visited[i] = 1
+                    if bfs(V) == 'NO':
+                        flag = 'NO'
+        print(flag)
