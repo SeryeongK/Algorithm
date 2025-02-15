@@ -1,32 +1,22 @@
-# 트리의 부모 찾기 - DFS
 import sys
 sys.setrecursionlimit(10**6)
+nodeNum = int(sys.stdin.readline())  # 노드의 수
 
-N = int(sys.stdin.readline())
+graph = [[] for _ in range(nodeNum + 1)]
+for _ in range(nodeNum-1):
+    a, b = map(int, sys.stdin.readline().split())
+    graph[a].append(b)
+    graph[b].append(a)
+visited = [0] * (nodeNum + 1)
 
-input = []
-for _ in range(N-1):
-    input.append(list(map(int, sys.stdin.readline().split())))
+def dfs(node):
+    graph[node].sort()  # 갈 수 있는 곳 중에 가기
+    for i in graph[node]:
+        if not visited[i]:
+            visited[i] = node  # 방문 시에 부모 표시
+            dfs(i)
 
-ls = [[] for _ in range(N+1)]
-for i in input:
-    a, b = i
-    ls[a].append(b)
-    ls[b].append(a)
-
-for i in ls:
-    i.sort()
-
-parent = [0]*(N+1)
-visited = [0]*(N+1)
-## 🚨 DFS는 이전 코드 참고(개념 확실히 익힐 것)
-def DFS(start):
-    visited[start] = 1
-    for i in ls[start]:
-        if visited[i] == 0:
-            parent[i] = start
-            DFS(i)
-
-DFS(1)
-for i in range(2, len(parent)):
-    print(parent[i])
+visited[1] = 1
+dfs(1)
+for i in range(2, nodeNum + 1):
+    print(visited[i])
