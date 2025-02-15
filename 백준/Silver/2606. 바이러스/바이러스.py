@@ -1,34 +1,27 @@
-# 연결 요소의 개수
 import sys
-sys.setrecursionlimit(10**6)
+comNum = int(sys.stdin.readline())  # 컴퓨터의 수
+con = int(sys.stdin.readline())  # 연결되어 있는 컴퓨터 쌍의 수
 
-N = int(sys.stdin.readline())
-M = int(sys.stdin.readline())
-input = []
-for _ in range(M):
-    input.append(list(map(int, sys.stdin.readline().split())))
+graph = [[False] * (comNum + 1) for _ in range((comNum + 1))]
+for _ in range(con):
+    a, b = map(int, sys.stdin.readline().split())
+    graph[a][b] = True
+    graph[b][a] = True
 
-## 연결 리스트 만들기
-graph = [[] for _ in range(N+1)]
-for i in input:
-    graph[i[0]].append(i[1])
-    graph[i[1]].append(i[0])
+visited = [False] * (comNum + 1)  # 방문 기록
+q = [1]
+visited[1] = True
+cnt = 0
 
-for i in input:
-    i = sorted(i)
+def bfs():
+    global cnt
+    while q:
+        cur = q.pop(0)
+        for i in range(1, comNum + 1):
+            if not visited[i] and graph[cur][i]:
+                q.append(i)
+                visited[i] = True
+                cnt += 1
 
-## DFS
-el = 0
-visited = [0]*(N+1)
-## 바이러스에 걸리게 되는 컴퓨터
-cnt = []
-def DFS(start):
-    global el, visited, cnt
-    visited[start] += 1
-    cnt.append(start)
-    for i in graph[start]:
-        if visited[i] == 0:
-            DFS(i)
-
-DFS(1)
-print(len(cnt)-1)
+bfs()
+print(cnt)
