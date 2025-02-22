@@ -1,39 +1,34 @@
-# 미로 탐색 - BFS
 import sys
-import collections
 sys.setrecursionlimit(10**6)
 
-N, M = map(int, sys.stdin.readline().split())
+N, M = map(int, sys.stdin.readline().split())  # N개의 줄 M개의 정수
 maze = []
-for _ in range(N):
-    input = sys.stdin.readline().strip()
-    line = []
-    for i in range(len(input)):
-        line.append(int(input[i]))
-    maze.append(line)
 
-# 방향 탐지기
-dy = [0, 1, 0, -1]
-dx = [-1, 0, 1, 0]
-# print(maze)
-q = collections.deque([])
-def BFS(starty, startx):
-    for i in range(0, 4):
+for _ in range(N):
+    maze.append(list(map(int, (list(sys.stdin.readline().strip())))))
+
+dy = [-1, 0, 1, 0]
+dx = [0, 1, 0, -1]
+q = [[0, 0]]
+
+
+def bfs(starty, startx):
+    global visited, cnt
+    if starty == N and startx == M:
+        return
+    for i in range(4):  # 위, 오른쪽, 아래, 왼쪽 순회
         tempy = starty + dy[i]
         tempx = startx + dx[i]
-        if 0 <= tempy < N and 0 <= tempx < M:
-            if maze[tempy][tempx] == 1:
-                # print(f"maze[tempx][tempy]: {maze[tempy][tempx]}, maze[startx][starty]: {maze[starty][startx]}")
+        if 0 <= tempy < N and 0 <= tempx < M:  # 미로 범위를 넘는지 확인
+            if maze[tempy][tempx] and not visited[tempy][tempx]:  # 갈 수 있는 곳이며 안 간 곳인지 확인
                 q.append([tempy, tempx])
-                maze[tempy][tempx] += maze[starty][startx]
-                # for i in maze:
-                #     print(i)
-            else: continue
+                visited[tempy][tempx] = visited[starty][startx] + 1
     while q:
-        ny, nx = q.popleft()
-        BFS(ny, nx)
+        y, x = q.pop(0)
+        bfs(y, x)
 
 
-BFS(0, 0)
-# print(maze)
-print(maze[N-1][M-1])
+visited = [[0] * M for _ in range(N)]
+visited[0][0] = 1
+bfs(0, 0)
+print(visited[N-1][M-1])
