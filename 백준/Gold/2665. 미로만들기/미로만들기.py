@@ -36,6 +36,7 @@ def dijkstra(startx, starty):
             tempx = x + mx[i]
             tempy = y + my[i]
             if 0 <= tempx < N and 0 <= tempy < N and visited[tempx][tempy] == 0:
+                ## 🚨 tempx, tempy는 힙에 넣었으니까 visited를 네 방향으로 확인하지 않으면 여러번 확인하게 됨
                 visited[tempx][tempy] = 1
                 # print(tempx, tempy, "방 확인:", rooms[tempx][tempy])
                 if rooms[tempx][tempy] == 1:
