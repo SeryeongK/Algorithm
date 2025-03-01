@@ -1,56 +1,61 @@
-# 토마토 - 2차원 배열 BFS
 import sys
 import collections
 M, N, H = map(int, sys.stdin.readline().split())
-tomato = []
-for _ in range(H):
-    ls = []
-    for _ in range(N):
-        ls.append(list(map(int, sys.stdin.readline().split())))
-    tomato.append(ls)
 
-# print(tomato)
-mz = [-1, 0, 0, 1, 0, 0]
-mx = [0, 0, 1, 0, 0, -1]
-my = [0, -1, 0, 0, 1, 0]
+tomatos = []
+for _ in range(H):
+    temp = []
+    for _ in range(N):
+        temp.append(list(map(int, sys.stdin.readline().strip().split())))
+    tomatos.append(temp)
+
+
+def bfs():
+
+    tz = [0, 0, 0, 0, 1, -1]
+    ty = [0, 0, 1, -1, 0, 0]
+    tx = [-1, 1, 0, 0, 0, 0]
+    while q:
+        z, y, x = q.popleft()
+        for i in range(6):
+            tempz = z + tz[i]
+            tempy = y + ty[i]
+            tempx = x + tx[i]
+            if 0 <= tempz < H and 0 <= tempy < N and 0 <= tempx < M:
+                cur_tomato = tomatos[tempz][tempy][tempx]
+                if cur_tomato == 0:
+                    tomatos[tempz][tempy][tempx] = tomatos[z][y][x] + 1
+                    q.append([tempz, tempy, tempx])
+
 
 q = collections.deque([])
-def BFS():
-    while q:
-        z, x, y = q.popleft()
-        for i in range(6):
-            nz = z + mz[i]
-            nx = x + mx[i]
-            ny = y + my[i]
-            if 0 <= nz < H and 0 <= nx < N and 0 <= ny < M and tomato[nz][nx][ny] == 0:
-                ## 🚨 토마토가 익은 날짜 세기 => 토마토의 숫자를 세면서 1씩 늘려가면 됨
-                tomato[nz][nx][ny] = tomato[z][x][y] + 1
-                q.append([nz, nx, ny])
+tomatoCnt = 0
+emptyCnt = 0
+result = None
+for z in range(H):
+    for y in range(N):
+        for x in range(M):
+            if tomatos[z][y][x] == 1:
+                tomatoCnt += 1
+                q.append([z, y, x])
+                tomatos[z][y][x] = 1
+            elif tomatos[z][y][x] == -1:
+                emptyCnt += 1
 
-## 익은 토마토 위치 큐에 추가하기
-for h in range(H):
-    for i in range(N):
-        for j in range(M):
-            if tomato[h][i][j] == 1:
-                q.append([h, i, j])
+totalSpace = H * N * M
+if tomatoCnt == totalSpace or emptyCnt == totalSpace:  # 토마토가 다 익었거나 아예 없거나
+    result = 0
+else:  # 다 익어 있지 않았다면
+    bfs()
+    maxNum = 0  # 다 익을 때까지 최소일수
+    for z in range(H):
+        for y in range(N):
+            for x in range(M):
+                if tomatos[z][y][x] == 0:  # 하나라도 안 익었으면
+                    result = -1
+                    break
+                maxNum = max(maxNum, tomatos[z][y][x])
+    if result != -1:
+        result = maxNum - 1
 
-BFS()
-# print("BFS 후:", tomato)
-days = []
-for h in range(H):
-    day = []
-    for i in tomato[h]:
-        for j in i:
-            ## 만약 안 익은 토마토가 남아있었다면
-            if j == 0:
-                print(-1)
-                exit()
-        day.append(max(i))
-    days.append(max(day))
-
-## 이미 하루차에 익어있는게 1이라고 되어있었으니까
-print(max(days)-1)
-"""
-print(max(max(tomato))-1)
-위 코드는 첫번째 원소의 값이 가장 큰 1차원 배열을 반환
-"""
+print(result)
