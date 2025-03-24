@@ -1,22 +1,22 @@
-# 1로 만들기
-# 원하는 정수까지의 DP 즉, 연산의 최솟값을 저장
 import sys
 N = int(sys.stdin.readline())
 
-DP = [0] * (N+1)
 if N == 1:
     print(0)
+elif N == 2 or N == 3:
+    print(1)
 else:
-    for i in range(2, N+1):
-        # -1 연산을 기본으로 둔다.
+    DP = [0] * (N + 1)
+    DP[1] = 0
+    DP[2] = 1
+    DP[3] = 1
+    for i in range(4, N+1):
         DP[i] = DP[i-1] + 1
-
-        # 2로 나누어 떨어지는 경우
-        if i % 2 == 0:
-            DP[i] = min(DP[i], DP[i//2] + 1)
-
-        # 3으로 나누어 떨어지는 경우
         if i % 3 == 0:
-            DP[i] = min(DP[i], DP[i//3] + 1)
+            # 3을 나누는 연산을 더한 것 vs 1을 빼는 연산을 더한 것
+            DP[i] = min(DP[i//3] + 1, DP[i])
+        if i % 2 == 0:
+            # 2을 나누는 연산을 더한 것 vs 1을 빼는 연산을 더한 것
+            DP[i] = min(DP[i//2] + 1, DP[i])
 
-    print(DP[-1])
+    print(DP[N])
