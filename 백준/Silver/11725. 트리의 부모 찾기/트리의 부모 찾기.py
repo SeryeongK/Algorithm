@@ -1,22 +1,24 @@
 import sys
 sys.setrecursionlimit(10**6)
-nodeNum = int(sys.stdin.readline())  # 노드의 수
 
-graph = [[] for _ in range(nodeNum + 1)]
-for _ in range(nodeNum-1):
+N = int(sys.stdin.readline())
+nodes = [[] for _ in range(N+1)]
+
+for _ in range(N-1):
     a, b = map(int, sys.stdin.readline().split())
-    graph[a].append(b)
-    graph[b].append(a)
-visited = [0] * (nodeNum + 1)
+    nodes[a].append(b)
+    nodes[b].append(a)
 
-def dfs(node):
-    graph[node].sort()  # 갈 수 있는 곳 중에 가기
-    for i in graph[node]:
-        if not visited[i]:
-            visited[i] = node  # 방문 시에 부모 표시
+result = [0] * (N+1)
+
+
+def dfs(start):
+    for i in nodes[start]:
+        if not result[i]:
+            result[i] = start
             dfs(i)
 
-visited[1] = 1
+
 dfs(1)
-for i in range(2, nodeNum + 1):
-    print(visited[i])
+for i in range(2, N+1):
+    print(result[i])
